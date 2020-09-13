@@ -1,0 +1,42 @@
+
+<html>
+<body>
+<script src="https://code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.qrcode.js"></script>
+<script type="text/javascript" src="js/qrcode2.js"></script>
+
+<div id="gcDiv"></div>
+
+
+<script>
+	fetchData();
+    function fetchData(){
+
+
+	$.ajax({
+		url:'/gocoder_qrcode',
+		type : 'POST',
+		
+		success:function(data){
+                       
+                       console.log(data[0]);
+					   //$("#prescription").text(data.prescription);
+					   jQuery('#gcDiv').qrcode({
+        render	: "table",
+        width : 300,
+        height : 300,
+        text	: data[0].prescription
+      }
+	);
+					
+                       
+                       }
+	})}
+
+	
+	
+		
+</script>
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script type="text/javascript">
+         $( document ).ready(function() {
+            $(window).resize();
+         }); 
+         $(window).resize(function(){
+             $('#chapter_select').css({position:'absolute'}).css({
+                 left: ($(window).width() - $('#chapter_select').outerWidth())/2,
+                 top: ($(window).height() - $('#chapter_select').outerHeight())/2
+             });
+         });
+        </script>
+        <style>
+            body 
+            {
+                background-image: url(/img/background.jpg);            
+            }
+        </style>
+        
+        <script>
+            setTimeout(function(){
+               window.location.href = 'login';
+            }, 2000);                                   
+        </script>
+        
+
+    </head>
+    <body>
+        <div id="chapter_select">
+            <div>
+                <h1 style="text-align:center;"><img src="/img/icon.png"></h1>
+            </div>
+            <br>
+            <div>
+                <h1 style="text-align:center;"><img src="/img/HOSPASS.JPG"></h1>
+            </div>
+            <div>
+                <h2 style="text-align:center;"><img src="/img/Description.JPG"></h2>
+            </div>
+        </div>
+    </body>
+</html>

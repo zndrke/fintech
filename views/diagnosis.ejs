@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <metaname="viewport" content="width=device-width, initial-scale=1, user-scalable=0"/>
+    <title>Hospass | diagnosis </title>
+
+    <!-- Google font file. If you want you can change. -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,900"
+      rel="stylesheet"
+    />
+
+    <!-- Fontawesome font file css -->
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+    
+
+    <!-- Animate css file for css3 animations. for more : https://daneden.github.io/animate.css -->
+    <!-- Only use animate action. If you dont use animation, you don't have to add.-->
+    <link rel="stylesheet" type="text/css" href="css/animate.css" />
+    <link rel="stylesheet" type="text/css" href="css/cryptocoins.css" />
+
+    <link rel="stylesheet" type="text/css" href="plugins/c3-chart/c3.css" />
+
+    <!-- Template global css file. Requared all pages -->
+    <link rel="stylesheet" type="text/css" href="css/global.style.css" />
+
+    <!-- Swiper slider css file -->
+    <link rel="stylesheet" href="css/swiper.min.css" />
+
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- Google Font -->
+    <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+
+    <!--turbo slider plugin css file -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="plugins/turbo-slider/turbo.css"
+    />
+
+
+    <style type="text/css">
+        .diagnosis_box { width : 500px; height : 550px; padding:10px;background-color: #fff; float:left; margin-right:10px; }
+    </style>
+
+    <style type="text/css">
+        .patient_box { width : 500px; height : 300px; border:1px solid; padding:10px;background-color: #fff; float:right; margin-bottom:10px; }
+    </style>
+    
+    <style type="text/css">
+        .medical_history_box { width : 500px; height : 300px; border:1px solid; padding:10px;background-color: #fff; float:right; }
+    </style>
+
+
+  </head>
+
+  <body>
+    <div class="wrapper">
+      
+      <div class="wrapper-inline"style="background-color: white; " >
+        <!-- Header area start -->
+        
+
+        <!-- Page content start -->
+        <main class="margin mt-0">
+          <div class="dash-balance">
+              <!-- Head -->
+
+          </div>
+          
+          <div id="chapter_select">
+            <div style= "width : 1040px; height : 650px; border:1px solid; padding:10px;" >
+                <center>
+                <div class="diagnosis_box">
+                의사 소견
+                    <textarea id="inputbox" cols="50" rows="23"></textarea>
+                         
+                    </textarea>
+                </div>
+                </center>
+                <center>
+                <div class="patient_box">
+                    환자가 입력한 증상 
+                </div>
+                <div class="medical_history_box">
+                    환자의 병력
+                </div>
+                </center>
+                <center>
+                <div><button id="save">save</button></div>
+                
+                <div id="result"></div>
+                </center>
+
+
+       <!-- JQuery library file. requared all pages -->
+       <script src="js/jquery-3.2.1.min.js"></script>
+
+       <!-- Template global script file. requared all pages -->
+       <script src="js/global.script.js"></script>
+       <script>
+           
+            window.onload=function() {
+            document.getElementById("save").onclick=processText;
+            }
+
+           function processText() {
+            var txtBox = document.getElementById("inputbox");
+            var lines = txtBox.value.split("\n");
+
+            // generate HTML version of text
+            var resultString  = "<p>";
+            for (var i = 0; i < lines.length; i++) {
+            resultString += lines[i] + "<br />";
+            }
+            resultString += "</p>";
+
+            // print out to page
+            var   blk   = document.getElementById("result");
+            blk.innerHTML  =  resultString; 
+            
+            console.log(blk.innerHTML)
+
+            //db에 저장
+            var userAdvise = blk.innerHTML;
+            console.log(userAdvise)
+            
+            $.ajax({
+                url: "/diagnosis",
+                type: "POST",
+                data: {
+                    userAdvise: userAdvise
+                },
+                success: function (data) {
+                    if (data) {
+                        alert("저장이 완료되었습니다.");
+                    } else {
+                        alert("저장 실패");
+                }
+          }
+        });
+            
+            }
+
+            
+
+           
+           
+
+       </script> 
+
+<!-- 
+          <section id="aa-subscribe">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="aa-subscribe-area">
+                    <form action="" >
+                      <button type="button" id="sendButton" class="aa-browse-btn">Send</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+           </section> -->
+        </main>
+        <!-- Page content end -->
+      </div>
+    </div>
+
+    <!--Page loader DOM Elements. Requared all pages-->
+    <div class="sweet-loader">
+      <div class="box">
+        <div class="circle1"></div>
+        <div class="circle2"></div>
+        <div class="circle3"></div>
+      </div>
+    </div>
+
+    <!-- JQuery library file. requared all pages -->
+    <script src="js/jquery-3.2.1.min.js"></script>
+
+    <!-- Swiper JS -->
+    <script src="js/swiper.min.js"></script>
+
+    <!-- Initialize Swiper -->
+
+    <!-- Flot Charts -->
+    <script src="plugins/c3-chart/c3.min.js"></script>
+    <script src="plugins/c3-chart/d3.min.js"></script>
+    <script src="plugins/c3-chart/c3.custom.js"></script>
+    <!-- Flot Charts -->
+    <script src="plugins/flot/jquery.flot.min.js"></script>
+    <script src="plugins/flot/jquery.flot.time.min.js"></script>
+    <script src="plugins/flot/jquery.flot.pie.min.js"></script>
+    <script src="plugins/flot/jquery.flot.tooltip.min.js"></script>
+    <script src="plugins/flot/jquery.flot.resize.min.js"></script>
+    <!-- Sparkline-->
+    <script src="plugins/jquery-sparkline/jquery.sparkline.js"></script>
+
+    <!-- Template global script file. requared all pages -->
+    <script src="js/app-charts.js"></script>
+    <script src="js/global.script.js"></script>
+
+        
+
+  </body>
+</html>

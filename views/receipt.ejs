@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <metaname="viewport" content="width=device-width, initial-scale=1, user-scalable=0"/>
+    <title>Hospass | receipt</title>
+
+    <!-- Google font file. If you want you can change. -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,900"
+      rel="stylesheet"
+    />
+
+    <!-- Fontawesome font file css -->
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+    
+
+    <!-- Animate css file for css3 animations. for more : https://daneden.github.io/animate.css -->
+    <!-- Only use animate action. If you dont use animation, you don't have to add.-->
+    <link rel="stylesheet" type="text/css" href="css/animate.css" />
+    <link rel="stylesheet" type="text/css" href="css/cryptocoins.css" />
+
+    <link rel="stylesheet" type="text/css" href="plugins/c3-chart/c3.css" />
+
+    <!-- Template global css file. Requared all pages -->
+    <link rel="stylesheet" type="text/css" href="css/global.style.css" />
+
+    <!-- Swiper slider css file -->
+    <link rel="stylesheet" href="css/swiper.min.css" />
+
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- Google Font -->
+    <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+
+    <!--turbo slider plugin css file -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="plugins/turbo-slider/turbo.css"
+    />
+
+
+    <style type="text/css">
+         .receipt_box { width : 600px; height : 400px; border:1px solid; padding:10px;background-color: #fff;}
+    </style>
+    
+
+    <style type="text/css">
+        .prescription_box { width : 400px; height : 300px; border:1px solid; padding:10px;background-color: #fff; }
+    </style>
+
+  </head>
+
+  <body>
+    <div class="wrapper">
+      
+      <div class="wrapper-inline"style="background-color: white; " >
+        <!-- Header area start -->
+        
+
+        <!-- Page content start -->
+        <main class="margin mt-0">
+          <div class="dash-balance">
+              <!-- Head -->
+
+          </div>
+          
+          <div id="chapter_select">
+            <center>
+              <div class="receipt_box">
+                영수증 내용
+                
+                <table border="1" bordercolor="black" width ="500" height="300" align = "center"  >	<!-- ToDo 목록 -->
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>진료 정보</th>
+                      <th>금액</th>
+                    </tr>
+                    <tr>
+                      <td>1.</td>
+                      <td><div id="paymentinfo"> </div></td>
+                      <td><div id="payment"> </div></td>
+                    </tr>
+                    <tr>
+                      <td>2.</td>
+                      <td>x-ray</td>
+                      <td>20,000</td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>총 금액</td>
+                      <td></td>
+                      <td>30,000</td>
+                    </tr>
+                    <tr>
+                      <td>부가세</td>
+                      <td></td>
+                      <td>3,000</td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    
+                    
+                  </thead>
+                  <tbody></tbody>
+                </table>
+                <br>
+
+                <table  width ="500" height="300" align = "center" >	<!-- ToDo 목록 -->
+                  <thead>
+                    <tr>
+                      <th>결제 금액</th>
+                      <th>33,000원</th>
+                    </tr>
+                    <tr>
+                      <th>결제 은행 </th>
+                      <th>오픈 은행</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    
+                  </tbody>
+                </table>
+              
+
+            </div>
+            </center>
+            
+            <h3 style="text-align:center;">처방전 이용코드</h3>
+            
+            <p style="text-align:center;">아래 QR코드를 약국에가서 기계에 인식시키세요.</p>
+            <center>
+                <div class="prescription_box">
+                <div id="prescription"></div>  
+                <h1 style="text-align:center;"></h1>
+                <img src="img/qr.png" width="250" height="250" alt="" />
+              
+              <script src="https://code.jquery.com/jquery.min.js"></script>
+              <script type="text/javascript" src="js/jquery.qrcode.js"></script>
+              <script type="text/javascript" src="js/qrcode2.js"></script>
+
+              <div id="gcDiv"></div>
+
+              <!-- qr code 생성 부분-->
+
+             <script>
+              fetchData1();
+                function fetchData1(){
+              $.ajax({
+                url:'/gocoder_qrcode',
+                type : 'POST',
+                success:function(data){
+                                  
+                        console.log(data[0]);
+                        //$("#prescription").text(data.prescription);
+                        jQuery('#gcDiv').qrcode({
+                    render	: "table",
+                    width : 250,
+                    height : 250,
+                   
+                  }
+              );                  
+              }
+              })}
+   
+            </script>
+
+               <script>
+           
+                fetchData();
+                function fetchData(){
+                    
+                    $.ajax({
+                        url:'/receipt',
+                        type : 'POST',
+                        success:function(data){
+                            
+                            console.log(data[0]);
+                        
+                            $("#paymentinfo").text(data[0].paymentinfo);
+                            $("#payment").text(data[0].payment);
+                            }
+                        })
+                }     
+     
+             </script>
+
+             
+       <!-- JQuery library file. requared all pages -->
+       <script src="js/jquery-3.2.1.min.js"></script>
+
+       <!-- Template global script file. requared all pages -->
+       <script src="js/global.script.js"></script>
+       <script>
+           
+          
+       </script> 
+
+<!-- 
+          <section id="aa-subscribe">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="aa-subscribe-area">
+                    <form action="" >
+                      <button type="button" id="sendButton" class="aa-browse-btn">Send</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+           </section> -->
+        </main>
+        <!-- Page content end -->
+      </div>
+    </div>
+
+    <!--Page loader DOM Elements. Requared all pages-->
+    <div class="sweet-loader">
+      <div class="box">
+        <div class="circle1"></div>
+        <div class="circle2"></div>
+        <div class="circle3"></div>
+      </div>
+    </div>
+
+    <!-- JQuery library file. requared all pages -->
+    <script src="js/jquery-3.2.1.min.js"></script>
+
+    <!-- Swiper JS -->
+    <script src="js/swiper.min.js"></script>
+
+    <!-- Initialize Swiper -->
+
+    <!-- Flot Charts -->
+    <script src="plugins/c3-chart/c3.min.js"></script>
+    <script src="plugins/c3-chart/d3.min.js"></script>
+    <script src="plugins/c3-chart/c3.custom.js"></script>
+    <!-- Flot Charts -->
+    <script src="plugins/flot/jquery.flot.min.js"></script>
+    <script src="plugins/flot/jquery.flot.time.min.js"></script>
+    <script src="plugins/flot/jquery.flot.pie.min.js"></script>
+    <script src="plugins/flot/jquery.flot.tooltip.min.js"></script>
+    <script src="plugins/flot/jquery.flot.resize.min.js"></script>
+    <!-- Sparkline-->
+    <script src="plugins/jquery-sparkline/jquery.sparkline.js"></script>
+
+    <!-- Template global script file. requared all pages -->
+    <script src="js/app-charts.js"></script>
+    <script src="js/global.script.js"></script>
+
+        
+
+  </body>
+</html>

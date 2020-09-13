@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <metaname="viewport" content="width=device-width, initial-scale=1, user-scalable=0"/>
+    <title>Hospass | account</title>
+
+    <!-- Google font file. If you want you can change. -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,900"
+      rel="stylesheet"
+    />
+
+    <!-- Fontawesome font file css -->
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+    
+
+    <!-- Animate css file for css3 animations. for more : https://daneden.github.io/animate.css -->
+    <!-- Only use animate action. If you dont use animation, you don't have to add.-->
+    <link rel="stylesheet" type="text/css" href="css/animate.css" />
+    <link rel="stylesheet" type="text/css" href="css/cryptocoins.css" />
+
+    <link rel="stylesheet" type="text/css" href="plugins/c3-chart/c3.css" />
+
+    <!-- Template global css file. Requared all pages -->
+    <link rel="stylesheet" type="text/css" href="css/global.style.css" />
+
+    <!-- Swiper slider css file -->
+    <link rel="stylesheet" href="css/swiper.min.css" />
+
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- Google Font -->
+    <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+
+    <!--turbo slider plugin css file -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="plugins/turbo-slider/turbo.css"
+    />
+  </head>
+
+  <body>
+    <div class="wrapper">
+      
+      <div class="wrapper-inline"style="background-color: white; " >
+        <!-- Header area start -->
+        
+
+        <!-- Page content start -->
+        <main class="margin mt-0">
+          <div class="dash-balance">
+              <!-- Head -->
+
+          </div>
+
+          <section id="cart-view" >
+            <div class="container" style="background-color: #ffffff;">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="cart-view-area">
+                    <div class="cart-view-table aa-wishlist-table" style="background-color: white; ">
+                      <form action="">
+                        <div class="table-responsive" >
+                           <table class="table">
+                             <!-- <thead>
+                                 <td>은행로고</td>
+                                 <td>은행이름</td>
+                                 <td>은행계좌</td>
+                                 <td>은행핀테크번호</td>
+                             </thead> -->
+                             <tbody id='cardList' >
+                              
+                             </tbody>
+                           </table>
+                         </div>
+                      </form>             
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+
+          <section id="aa-subscribe">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="aa-subscribe-area">
+                    <form action="" >
+                      <button type="button" id="sendButton" class="aa-browse-btn">Send</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+           </section>
+        </main>
+        <!-- Page content end -->
+      </div>
+    </div>
+
+    <!--Page loader DOM Elements. Requared all pages-->
+    <div class="sweet-loader">
+      <div class="box">
+        <div class="circle1"></div>
+        <div class="circle2"></div>
+        <div class="circle3"></div>
+      </div>
+    </div>
+
+    <!-- JQuery library file. requared all pages -->
+    <script src="js/jquery-3.2.1.min.js"></script>
+
+    <!-- Swiper JS -->
+    <script src="js/swiper.min.js"></script>
+
+    <!-- Initialize Swiper -->
+
+    <!-- Flot Charts -->
+    <script src="plugins/c3-chart/c3.min.js"></script>
+    <script src="plugins/c3-chart/d3.min.js"></script>
+    <script src="plugins/c3-chart/c3.custom.js"></script>
+    <!-- Flot Charts -->
+    <script src="plugins/flot/jquery.flot.min.js"></script>
+    <script src="plugins/flot/jquery.flot.time.min.js"></script>
+    <script src="plugins/flot/jquery.flot.pie.min.js"></script>
+    <script src="plugins/flot/jquery.flot.tooltip.min.js"></script>
+    <script src="plugins/flot/jquery.flot.resize.min.js"></script>
+    <!-- Sparkline-->
+    <script src="plugins/jquery-sparkline/jquery.sparkline.js"></script>
+
+    <!-- Template global script file. requared all pages -->
+    <script src="js/app-charts.js"></script>
+    <script src="js/global.script.js"></script>
+
+    <script>
+      var bank_name
+      var jwtToken = sessionStorage.getItem("ourtoken");
+      console.log(jwtToken);
+      if (jwtToken == "") {
+        alert("로근해주세요");
+        window.location.href = "/login";
+      }
+      fetchUserData();
+      function fetchUserData() {
+        $.ajax({
+          url: "/list",
+          type: "POST",
+          headers: {
+            ourtoken: jwtToken,
+          },
+          success: function (data) {
+            console.log(data.res_list);
+            for (var i = 0; i < data.res_list.length; i++) {
+              if(data.res_list[i].bank_code_std=='097'){
+                    imgSrc = '<img src="img/bank/openBank.jpg" alt="img">'
+                  }
+                  else if(data.res_list[i].bank_code_std=='003'){
+                    imgSrc = '<img src="img/bank/IBKbank.png" alt="img">'
+                  }
+                  else if(data.res_list[i].bank_code_std=='011'){
+                    imgSrc = '<img src="img/bank/NHbank.png" alt="img">'
+                  }
+                  else if(data.res_list[i].bank_code_std=='007'){
+                    imgSrc = '<img src="img/bank/ShBank.png" alt="img">'
+                  }
+                  else if(data.res_list[i].bank_code_std=='023'){
+                    imgSrc = '<img src="img/bank/SCbank.png" alt="img">'
+                  }
+                  else if(data.res_list[i].bank_code_std=='004'){
+                    imgSrc = '<img src="img/bank/KbBank.jpg" alt="img">'
+                  }
+                  else{
+                    imgSrc = '<img src="img/man/polo-shirt-1.png" alt="img">';
+                  }
+
+              $("#cardList").append(
+                '<tr id="row"+i>'+
+                  '<td>'+imgSrc+'</td>'+
+                  '<td>'+data.res_list[i].bank_name+'</td>'+
+                  '<td>'+data.res_list[i].account_num_masked+'</td>'+
+                  //'<td>'+data.res_list[i].fintech_use_num+'</td>'+
+                  '</tr>'
+              );
+            }
+          },
+        });
+      }
+      $(document).on('click', '#cardList tr', function(){
+      var tdArray = new Array();
+      var tr = $(this);
+      var td = $(this).children();
+      // tr.text()는 클릭된 Row 즉 tr에 있는 모든 값을 가져온다.
+      console.log("클릭한 Row의 모든 데이터 : "+tr.text());
+      //tr에 있는 모든 데이터
+      // 반복문을 이용해서 배열에 값을 담아 사용할 수 도 있다.
+      td.each(function(i){
+        tdArray.push(td.eq(i).text());
+      });
+      //모든 테이블 색 초기화
+      $('#cardList').each(function(i){
+        $('#cardList tr').css( "background-color", "white" );
+      })
+      //선택 tr 색 변경
+      $(this).css( "background-color", "#D1EF9C" );
+      console.log("배열에 담긴 값 : "+tdArray[3]);
+      console.log("1번쨰 : "+tdArray[0]);
+      console.log("2번쨰 : "+tdArray[1]);
+      console.log("3번쨰 : "+tdArray[2]);
+      console.log("4번쨰 : "+tdArray[3]);
+      //은행이름과 핀테크 번호 가져오기
+      bank_name=tdArray[1];
+      account_num_masked=tdArray[2];
+      //fintech_use_num=tdArray[3];
+      
+    })
+
+      $("#sendButton").click(function(){
+          window.location.href = "/receipt";
+        })
+
+    </script>
+  </body>
+</html>
