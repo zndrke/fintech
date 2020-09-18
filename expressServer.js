@@ -6,10 +6,11 @@ const auth = require('./lib/auth');
 
 var mysql      = require('mysql');
 var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : 'ab159753',
-  database : 'hospass'
+  host     : 'db-4rgvu.cdb.ntruss.com',	//db 변경
+  port	   : '3306',
+  user     : 'hospass_db',
+  password : 'hospass123!@',
+  database : 'hospass_db'
 });
  
 connection.connect();
@@ -46,7 +47,7 @@ app.get('/authResult', function(req, res){
           code : authCode,
           client_id : 'rimj9uTJYMs8F1wW7xfSqDtirHOgWzP0x6Gtb0eK', //key변경
           client_secret : 'aulHkwkFPRrpH35tz6FolBev6zVF3NTGPsgH2sLy',//secret변경
-          redirect_uri : 'http://localhost:3000/authResult',
+          redirect_uri : 'http://27.96.134.37:3000/authResult',
           grant_type : 'authorization_code'
       }
   }
@@ -123,7 +124,7 @@ app.post('/signup', function(req, res){
   var userRefreshToken = req.body.userRefreshToken;
   var userSeqNo = req.body.userSeqNo;
   console.log(userAccessToken, userRefreshToken, userSeqNo)
-  var sql = "INSERT INTO hospass.user"+
+  var sql = "INSERT INTO user"+
   " (name, email, password, accesstoken, refreshtoken, userseqno)"+
   " VALUES (?, ?, ?, ?, ?, ?)"
   connection.query(sql,[userName, userEmail, userPassword,
@@ -329,7 +330,7 @@ app.get("/gocoder_qrcode", function (req, res) {
 
 app.post("/gocoder_qrcode", function (req, res) {
   
-  var sql = "SELECT * FROM receipt WHERE user = '3'";
+  var sql = "SELECT * FROM receipt WHERE user = '1'";
   connection.query(sql, function (error, results){
     if(error) console.log('query is not excuted. select fail...\n' + err);
     else {
@@ -352,7 +353,7 @@ app.get('/receipt_list', function(req,res){
 
 app.post('/pay',function(req,res){
   
-  var userId = 3;
+  var userId = 1;
   var sql = "SELECT * FROM receipt WHERE user = ?";
   connection.query(sql,[userId], function(err, result){
       
@@ -371,7 +372,7 @@ app.post('/pay',function(req,res){
 })
 app.post('/receipt',function(req,res){
   
-  var userId = 3;
+  var userId = 1;
   var sql = "SELECT * FROM receipt WHERE user = ?";
   connection.query(sql,[userId], function(err, result){
       
@@ -406,7 +407,7 @@ app.get("/accountput", function (req, res) {
 });
 app.post('/accountdelete',function(req,res) {
     
-  var userId = 3;
+  var userId = 1;
   var sql = "SELECT * FROM user WHERE id = ?";
   connection.query(sql,[userId], function(err, result){
       
@@ -461,7 +462,7 @@ app.post("/list", auth, function (req, res) {
 app.post('/diagnosis', function(req, res){
   var userAdvise = req.body.userAdvise;
   //console.log(userAdvise)
-  var sql = "UPDATE hospass.receipt SET advise=? WHERE user = '3'"
+  var sql = "UPDATE receipt SET advise=? WHERE user = '1'"
   connection.query(sql,[userAdvise], function (error, results, fields) {
       if (error) throw error;
       res.json('저장완료');
